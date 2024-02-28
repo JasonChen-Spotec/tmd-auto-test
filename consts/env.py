@@ -8,5 +8,3 @@ class RedisConfig:
 
 
 baseHost = os.getenv('BASE_HOST') if os.getenv('BASE_HOST') else 'http://192.168.0.129:31000'
-
-runEnv = os.getenv('RUN_ENV') if os.getenv('RUN_ENV') else 'test'

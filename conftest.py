@@ -29,9 +29,23 @@ loginUserInfo = None
 #     loginUserInfo = res['body']['appLoginVO']
 
 
-@pytest.fixture
-def run_test():
-    if consts.env.baseHost =='pro':
-        pytest.skip("Skipping test due to SKIP_TEST environment variable")
 
-    yield
+# 加入环境参数env  pytest --env=test | pro
+def pytest_addoption(parser):
+    parser.addoption("--env", action="store", default="test")
+
+@pytest.fixture
+def run_env(request):
+    return request.config.getoption("--env")
+# 当加入注解@pytest.mark.runALL的时候该用例会在pro环境运行
+def pytest_collection_modifyitems(config, items):
+    for item in items:
+        if config.getoption("--env") == "pro":
+            if 'runALL' in item.keywords:
+                continue
+            else:
+                item.add_marker(pytest.mark.skip(reason="Skipping test for non-test environment"))
+        else:
+            continue
+
+

@@ -4,18 +4,68 @@
 4. 测试环境执行的注解
 5. 测试报告
 
-在 Python 项目中，可以通过以下几种方式来设置环境变量：
+## 安装依赖
+```shell
+pip install -r requeirments.txt
+```
 
-在代码中直接设置：
-python
-import os
+## 环境变量BASE_HOST
+```shell
+## 指定运行的apiHost默认: http://192.168.0.129:31000
+export BASE_HOST=''
+```
+## 运行
+```shell
+pytest -s --env=pro
+# --env=pro指定环境，可选，如果不写默认是--env=test
+```
 
-# 设置环境变量
-os.environ['MY_VAR'] = 'my_value'
+## 注解说明
+1. 指定运行所有说明
+```py
+@pytest.mark.runALL
+```
 
-# 获取环境变量的值
-value = os.getenv('MY_VAR')
-在命令行或启动脚本中设置环境变量： 在运行 Python 项目之前，可以在命令行或启动脚本中设置环境变量，例如：
-$ export MY_VAR=my_value
-$ python my_script.py
-以上是设置 Python 项目中环境变量的几种常用方法，您可以根据具体情况选择合适的方式来设置环境变量。
+## 代码生成地址
+http://192.168.0.14:7070
+
+## 测试报告
+```py
+pytest -s  --alluredir=./allure-report 生成报告
+allure serve  ./allure-report
+```
+
+## 用例数据格式说明
+```ts
+type casesItem = {
+  /** 用例标题 */
+  title: string,
+  /** 是否在生产环境运行 */
+  runPro?: "true" | "false",
+  /** 路径参数 activity/changeActivity/{id} 传入{id: 1}输出activity/changeActivity/{1}*/
+  pathParams?: Dictionary,
+  /** 接口参数 */
+  data?: Dictionary,
+  /** 期望的结果 */
+  expected: {
+      header: Dictionary
+      body?: Dictionary
+  }
+},
+
+type DataCases = {
+  /** 用例分类 */
+  feature: string,
+  /** 用例函数名称 */
+  funcNameSpace: string,
+  /** 重要等级 */
+  funcNameSpace: 'BLOCKER' | 'CRITICAL' | 'NORMAL' | 'MINOR' | 'TRIVIAL',
+  /** 用例数据相对路径 */
+  casePath: string,
+  /** 接口路径 */
+  path: string
+  /** 详细用例数据 */
+  casesList: casesItem[]
+}
+
+```
