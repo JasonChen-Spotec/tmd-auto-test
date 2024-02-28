@@ -29,6 +29,9 @@ pytest -s --env=pro
 ## 代码生成地址
 http://192.168.0.14:7070
 
+## 代码格式化插件
+autopep8
+
 ## 测试报告
 ```py
 pytest -s  --alluredir=./allure-report 生成报告
