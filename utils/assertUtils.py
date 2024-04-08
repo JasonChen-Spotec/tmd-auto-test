@@ -3,6 +3,8 @@ class AssertUtils():
   @classmethod
   def checkReqSuccess(self, res):
     assert res['header']['code'] == '0000'
+
+  @classmethod
   def checkSectionException(res, exceptResult):
     resData = {
       'code': res['header']['code'],
@@ -10,6 +12,7 @@ class AssertUtils():
     }
     assert resData == exceptResult
 
+  @classmethod
   def checkGlobalException(res, exceptResult):
     resData = {
       'code': res['header']['code'],
