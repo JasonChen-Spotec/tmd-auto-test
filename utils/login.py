@@ -35,7 +35,7 @@ class RequestClient:
             response = self.session.get(
                 url=requestParamsMap["url"],
                 headers=requestParamsMap["headers"],
-                params=requestParamsMap["data"],
+                params=data,
                 **kwargs
             )
             return response.json()
